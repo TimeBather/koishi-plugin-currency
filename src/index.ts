@@ -1,7 +1,7 @@
-import {Context, Schema, segment, Service} from 'koishi'
-import {EconomicService} from "./service";
+import {Context, Schema} from 'koishi'
+import {CurrencyService} from "./service";
 
-export const name = 'economic'
+export const name = 'currency'
 
 export interface Config {}
 
@@ -29,7 +29,7 @@ export function apply(ctx: Context) {
   },{
     autoInc:true
   })
-  ctx.plugin(EconomicService)
+  ctx.plugin(CurrencyService)
 }
 
 export * from './service'

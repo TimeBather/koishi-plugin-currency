@@ -1,9 +1,10 @@
 {
-  "name": "koishi-plugin-economic",
-  "description": "An economic plugin for koishi framework",
+  "name": "koishi-plugin-currency",
+  "description": "A currency plugin for koishi framework",
   "version": "0.1.0-alpha",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
+  "author": "TimeBather <open-source@timebather.cn>",
   "files": [
     "lib",
     "dist"

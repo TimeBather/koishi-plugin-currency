@@ -20,12 +20,12 @@ describe('Economic Session API', function () {
     app.plugin(MemoryDatabase)
     app.plugin(EconomicPlugin)
     app.plugin(MockPlugin)
-    await new Promise((resolve) => app.using(['database', 'economic','mock'], resolve))
-    app.economic.extends("test")
+    await new Promise((resolve) => app.using(['database', 'currency','mock'], resolve))
+    app.currency.extends("test")
     await app.database.create("user", {id: 1,mock:"1"})
     await app.database.create("user", {id: 2,mock:"2"})
   });
-  it("Should be able to add money to a user", async function () {
+  it("Should be able to deposit money to a user", async function () {
     app.command("test",{authority:0})
       .action(async ({session})=>{
       await session.add("test",10,"Chat")

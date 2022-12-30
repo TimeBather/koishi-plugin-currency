@@ -2,23 +2,21 @@ import {Argv, Context, Service, Session} from "koishi";
 import {BaseCurrencyManager, Transaction} from "./base";
 import {injectSession, revertSession} from "./session";
 import {Currencies, addCommandListeners} from "./index";
-import {EconomicError, InsufficientBalanceError} from "./types";
 
 declare module "koishi" {
   interface Context {
-    economic: EconomicService
+    currency: CurrencyService
   }
   interface Tables {
     transaction: Transaction
   }
 }
 
-export class EconomicService extends Service{
+export class CurrencyService extends Service{
   currencies: Map<string, BaseCurrencyManager> = new Map();
   default_currency = new BaseCurrencyManager(this.ctx.database,"default::this-do-not-exists")
   constructor(ctx:Context) {
-
-    super(ctx,'economic')
+    super(ctx,'currency')
   }
 
   public readonly using = ['database']
