@@ -76,7 +76,10 @@ export class CurrencyService extends Service{
 
   extends(currencyId:keyof Currencies){
     this.ctx.database.extend('user', {
-        [currencyId]: 'double'
+        [currencyId]: {
+          type:'double',
+          initial:0
+        },
       }
     )
   }
