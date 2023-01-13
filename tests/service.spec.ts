@@ -28,6 +28,12 @@ describe('Economic Service', function () {
     app.currency.extends("test")
   });
 
+  it("The new currency should has a default value of 0", async function () {
+    const user = await app.database.get("user",{id:1})
+    expect(user[0].test).not.undefined
+    expect(user[0].test).to.equal(0)
+  });
+
   it("Should be able to add money to a user", async function () {
     await app.currency.add("test",1,100,"test")
     const user = await app.database.get("user",{id:1})
