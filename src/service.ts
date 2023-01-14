@@ -12,8 +12,15 @@ declare module "koishi" {
   }
 }
 
+export interface CurrencyMetaInformation{
+  name? : string
+  unit? : string
+  hidden? : boolean
+}
+
 export class CurrencyService extends Service{
   currencies: Map<string, BaseCurrencyManager> = new Map();
+  metadata: Map<string,CurrencyMetaInformation> = new Map();
   default_currency = new BaseCurrencyManager(this.ctx.database,"default::this-do-not-exists")
   constructor(ctx:Context) {
     super(ctx,'currency')
@@ -74,7 +81,7 @@ export class CurrencyService extends Service{
     return await this.__get_base(currencyId).transfer(...args)
   }
 
-  extends(currencyId:keyof Currencies){
+  extends(currencyId:keyof Currencies,meta?:CurrencyMetaInformation){
     this.ctx.database.extend('user', {
         [currencyId]: {
           type:'double',
@@ -82,5 +89,8 @@ export class CurrencyService extends Service{
         },
       }
     )
+    if(meta && !this.metadata.has(currencyId)){
+      this.metadata.set(currencyId,meta);
+    }
   }
 }
