@@ -1,11 +1,27 @@
 import {Context, Schema} from 'koishi'
-import {CurrencyService} from "./service";
+import {CurrencyMetaInformation, CurrencyService} from "./service";
 
 export const name = 'currency'
 
-export interface Config {}
+interface CurrencyPreDeclarations{
+  id:string
+  meta:CurrencyMetaInformation
+}
 
-export const Config: Schema<Config> = Schema.object({})
+export interface Config {
+  currencies:CurrencyPreDeclarations[]
+}
+
+export const Config: Schema<Config> = Schema.object({
+  currencies: Schema.array(Schema.object({
+    id: Schema.string().description('货币的ID(如money)'),
+    meta: Schema.object({
+      name: Schema.string().description("货币名称(如金币)"),
+      unit: Schema.string().description("货币单位(如个)"),
+      hidden: Schema.boolean().description("是否隐藏货币")
+    })
+  }))
+})
 
 export const using = ['database']
 
@@ -17,8 +33,8 @@ declare module 'koishi' {
   interface User extends Currencies{}
 }
 
-export function apply(ctx: Context) {
-  ctx.database.extend('transaction',{
+export function apply(ctx: Context,config:Config) {
+  ctx.database.extend('transaction', {
     id: 'integer',
     fromUserId: 'integer',
     toUserId: 'integer',
@@ -26,10 +42,15 @@ export function apply(ctx: Context) {
     amount: 'double',
     reason: 'string',
     status: 'integer'
-  },{
-    autoInc:true
+  }, {
+    autoInc: true
   })
   ctx.plugin(CurrencyService)
+  ctx.using(['currency'], (ctx) => {
+    config.currencies.map((value) => {
+      ctx.currency.extends(value.id as keyof Currencies, value.meta)
+    })
+  })
 }
 
 export * from './service'
