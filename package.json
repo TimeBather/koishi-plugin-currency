@@ -1,7 +1,7 @@
 {
   "name": "koishi-plugin-currency",
   "description": "A currency plugin for koishi framework",
-  "version": "0.1.0-alpha",
+  "version": "0.1.1-alpha",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "author": "TimeBather <open-source@timebather.cn>",
@@ -14,10 +14,24 @@
     "test": "mocha --exit -r esbuild-register -r yml-register tests/**/*.spec.ts"
   },
   "keywords": [
+    "bot",
     "chatbot",
     "koishi",
-    "plugin"
+    "plugin",
+    "service",
+    "currency"
   ],
+  "koishi": {
+    "description": {
+      "en": "A cross-plugin currency service plugin",
+      "zh": "跨插件的多功能货币基础服务插件"
+    },
+    "service": {
+      "implements": [
+        "currency"
+      ]
+    }
+  },
   "peerDependencies": {
     "koishi": "^4.10.6-alpha.0"
   },
