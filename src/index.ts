@@ -20,7 +20,16 @@ export const Config: Schema<Config> = Schema.object({
       unit: Schema.string().description("货币单位(如个)"),
       hidden: Schema.boolean().description("是否隐藏货币")
     })
-  }))
+  })).default([
+    {
+      id: 'money',
+      meta: {
+        name: '金币',
+        unit: '个',
+        hidden: false
+      }
+    }
+  ])
 })
 
 export const using = ['database']
@@ -50,6 +59,9 @@ export function apply(ctx: Context,config:Config) {
     config.currencies.map((value) => {
       ctx.currency.extends(value.id as keyof Currencies, value.meta)
     })
+  })
+  ctx.on('before-attach-user',(session,fields)=>{
+    fields.add('id');
   })
 }
 
