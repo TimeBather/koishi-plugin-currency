@@ -1,6 +1,6 @@
 # koishi-plugin-currency
 
-[![npm](https://img.shields.io/npm/v/koishi-plugin-currency?style=flat-square)](https://www.npmjs.com/package/koishi-plugin-economic)
+[![npm](https://img.shields.io/npm/v/koishi-plugin-currency?style=flat-square)](https://www.npmjs.com/package/koishi-plugin-currency)
 
 A currency plugin for koishi framework
 
